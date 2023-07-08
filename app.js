@@ -7,9 +7,12 @@ const _ = require("lodash");
 const PORT = process.env.PORT || 3000;
 
 
-const homeStartingContent = "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing.";
-const aboutContent = "Hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper. Non diam phasellus vestibulum lorem sed. Platea dictumst quisque sagittis purus sit. Egestas sed sed risus pretium quam vulputate dignissim suspendisse. Mauris in aliquam sem fringilla. Semper risus in hendrerit gravida rutrum quisque non tellus orci. Amet massa vitae tortor condimentum lacinia quis vel eros. Enim ut tellus elementum sagittis vitae. Mauris ultrices eros in cursus turpis massa tincidunt dui.";
+const homeStartingContent = "\"We Share\" is an intimate and private personal blog website created by an individual who wishes to document their thoughts, experiences, and reflections in a more secluded setting. It serves as a digital space for self-expression and introspection, where the writer can freely share their innermost thoughts without the intention of reaching a wide audience.";
+const aboutContent = "\"We Share\" is an intimate and private personal blog website created by an individual who wishes to document their thoughts, experiences, and reflections in a more secluded setting. It serves as a digital space for self-expression and introspection, where the writer can freely share their innermost thoughts without the intention of reaching a wide audience.";
 const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rhoncus urna neque viverra justo nec ultrices. Arcu dui vivamus arcu felis bibendum. Consectetur adipiscing elit duis tristique. Risus viverra adipiscing at in tellus integer feugiat. Sapien nec sagittis aliquam malesuada bibendum arcu vitae. Consequat interdum varius sit amet mattis. Iaculis nunc sed augue lacus. Interdum posuere lorem ipsum dolor sit amet consectetur adipiscing elit. Pulvinar elementum integer enim neque. Ultrices gravida dictum fusce ut placerat orci nulla. Mauris in aliquam sem fringilla ut morbi tincidunt. Tortor posuere ac ut consequat semper viverra nam libero.";
+const postBody1 = "Experiencing nature is like immersing oneself in a world of awe and wonder. The gentle rustle of leaves, the vibrant hues of flowers, and the invigorating scent of fresh air all create a sensory symphony that nourishes the soul. Walking through a dense forest, every step seems to carry away the worries of the world, replaced by a profound sense of peace and tranquility. The towering trees stand as guardians, offering shade and shelter while whispering ancient stories of resilience and growth."
+const postBody2 = "Music has a remarkable ability to refresh and uplift my mood, like a gentle breeze sweeping away the cobwebs of the mind. It has an uncanny power to transport me to different realms, evoking a cascade of emotions and memories. When I press play and let the melodies wash over me, a wave of energy surges through my veins. The rhythm entwines with my heartbeat, setting a vibrant tempo that resonates with my very essence. In each note, I find solace, inspiration, and an escape from the mundane."
+
 
 const app = express();
 
@@ -18,10 +21,10 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-var posts = [];
+var posts = [{title: "Experience with Nature", postBody: postBody1}, {title:"Music helps a lot", postBody: postBody2}];
 
 app.get("/", function(req, res){
-  res.render("home", {homeContent:homeStartingContent, allPosts:posts});
+  res.render("home", {allPosts:posts});
 });
 
 app.get("/posts/:blog", function(req, res){
@@ -56,7 +59,11 @@ app.get("/about", function(req, res){
 });
 
 app.get("/contact", function(req, res){
-  res.render("contact", {contactContent:contactContent});
+  res.render("contact");
+});
+
+app.post("/contact", function(req, res){
+  res.render("contact_final");
 });
 
 app.get("/compose", function(req, res){
